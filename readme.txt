@@ -1,7 +1,8 @@
 * Introduction
 
 Keycap is a simple keystroke logger for Windows XP or newer Windows desktop and 
-server operating systems. It is intended solely for educational purposes. 
+server operating systems. It logs the key pressed, the date and time of the 
+press and the active window. It is intended solely for educational purposes.  
 Keycap is meant to demonstrate one approach to software based keyboard API 
 logging. Keycap does not require system wide kernel hooks or other low-level 
 integration. It can be executed by normal users. 
